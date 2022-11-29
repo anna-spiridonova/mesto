@@ -1,3 +1,4 @@
 .profile__container {
   display: flex;
+  flex-basis: 75%;
 }
