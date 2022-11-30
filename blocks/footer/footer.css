@@ -1,21 +1,18 @@
-.header {
-  padding: 45px 0 41px;
-  box-sizing: border-box;
+.footer {
   max-width: 880px;
   margin: 0 auto;
-  border-bottom: 1px solid rgba(84, 84, 84, .7);
+  padding: 67px 0 60px;
 }
 
 @media screen and (max-width: 1024px) {
-  .header {
+  .footer {
     max-width: 680px;
   }
 }
 
 @media screen and (max-width: 720px) {
-  .header {
+  .footer {
     max-width: 100%;
-    padding: 28px 27px 28px;
+    padding: 48px 19px 36px;
   }
 }
-
