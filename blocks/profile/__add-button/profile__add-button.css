@@ -3,11 +3,6 @@
   height: 50px;
   background-image: url(../../../images/Add-Button-desktop.svg);
   background-color: #000;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  padding: 0;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 380px) {

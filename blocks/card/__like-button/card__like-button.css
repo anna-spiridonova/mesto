@@ -3,9 +3,4 @@
   height: 19px;
   background-image: url(../../../images/like-button.svg);
   background-color: #fff;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  padding: 0;
-  cursor: pointer;
 }
