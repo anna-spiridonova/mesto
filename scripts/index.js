@@ -32,11 +32,20 @@ const cardsContainer = document.querySelector('.cards');
 
 //открытие и закрытие попапов
 function openPopup(popup) {
+  document.addEventListener('keydown', keyHandler);
   popup.classList.add('popup_opened');
 }
 function closePopup(popup) {
+  document.removeEventListener('keydown', keyHandler);
   popup.classList.remove('popup_opened');
 }
+
+function keyHandler(evt) {
+  if (evt.key === 'Escape'){
+    const currentPopup = document.querySelector('.popup_opened');
+    closePopup(currentPopup);
+  };
+};
 
 //сохранить профиль
 function submitProfile (evt) {
@@ -52,7 +61,7 @@ function newCard(link, name) {
   const cardImage = cardElement.querySelector('.card__image');
   cardImage.src = link;
   cardElement.querySelector('.card__title').textContent = name;
-  cardElement.querySelector('.card__image').alt = name;
+  cardImage.alt = name;
 
   const cardLike = cardElement.querySelector('.card__like-button');
   cardLike.addEventListener('click', function() {
@@ -121,6 +130,27 @@ placeCloseButton.addEventListener('click', function () {
 
 imageCloseButton.addEventListener('click', function () {
   closePopup(imagePopup);
+});
+
+profilePopup.addEventListener('click', function(){
+  closePopup(profilePopup);
+});
+profilePopup.querySelector('.popup__container').addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+
+placePopup.addEventListener('click', function(){
+  closePopup(placePopup);
+});
+placePopup.querySelector('.popup__container').addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+
+imagePopup.addEventListener('click', function(){
+  closePopup(imagePopup);
+});
+imagePopup.querySelector('.popup__image-container').addEventListener('click', function(event) {
+  event.stopPropagation();
 });
 
 profileForm.addEventListener('submit', submitProfile);

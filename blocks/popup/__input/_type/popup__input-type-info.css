@@ -2,8 +2,7 @@
   font-size: 14px;
   line-height: 17px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
-  padding: 10px 5px;
-  margin: 0 0 19px;
+  padding: 5px 5px 6px;
 }
 
 .popup__input_type_info:focus {

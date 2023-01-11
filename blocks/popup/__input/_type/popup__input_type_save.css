@@ -3,12 +3,12 @@
   line-height: 22px;
   background-color: #000;
   color: #fff;
-  margin: 29px 0 0;
+  margin: 19px 0 0;
   height: 50px;
   border-radius: 2px;
 }
 
-.popup__input_type_save:hover {
+.popup__input_type_save:not([disabled]):hover {
   opacity: .8;
 }
 
@@ -17,6 +17,6 @@
     font-size: 14px;
     line-height: 17px;
     height: 46px;
-    margin: 24px 0 0;
+    margin: 14px 0 0;
   }
 }
