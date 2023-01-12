@@ -32,15 +32,15 @@ const cardsContainer = document.querySelector('.cards');
 
 //открытие и закрытие попапов
 function openPopup(popup) {
-  document.addEventListener('keydown', keyHandler);
+  document.addEventListener('keydown', closeByEscape);
   popup.classList.add('popup_opened');
 }
 function closePopup(popup) {
-  document.removeEventListener('keydown', keyHandler);
+  document.removeEventListener('keydown', closeByEscape);
   popup.classList.remove('popup_opened');
 }
 
-function keyHandler(evt) {
+function closeByEscape(evt) {
   if (evt.key === 'Escape'){
     const currentPopup = document.querySelector('.popup_opened');
     closePopup(currentPopup);
@@ -111,6 +111,7 @@ function submitPlace (evt) {
 
 //слушатели кнопок
 addButton.addEventListener('click', function() {
+  enableValidation(validationConfig);
   openPopup(placePopup);
 });
 
