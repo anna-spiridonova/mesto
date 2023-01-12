@@ -111,7 +111,7 @@ function submitPlace (evt) {
 
 //слушатели кнопок
 addButton.addEventListener('click', function() {
-  enableValidation(validationConfig);
+  disableCardSubmit(validationConfig);
   openPopup(placePopup);
 });
 

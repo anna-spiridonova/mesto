@@ -62,4 +62,11 @@ function enableValidation(config){
   });
 };
 
+//деактиватор сабмита
+function disableCardSubmit(config) {
+  const cardSubmit = placePopup.querySelector(config.submitButtonSelector);
+  cardSubmit.classList.add(config.inactiveButtonClass);
+  cardSubmit.disabled = true;
+};
+
 enableValidation(validationConfig);
