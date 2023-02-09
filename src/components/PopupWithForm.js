@@ -31,22 +31,3 @@ export default class PopupWithForm extends Popup {
     })
   };
 }
-
-// //сабмит формы профиля
-// function submitProfile (evt) {
-//   evt.preventDefault();
-//   nameProfile.textContent = nameInput.value;
-//   jobProfile.textContent = jobInput.value;
-//   closePopup(profilePopup);
-// };
-
-// //сабмит формы карточки
-// function submitPlace (evt) {
-//   evt.preventDefault();
-//   //addCard(imageInput, titleInput);
-
-//   evt.target.reset();
-//   closePopup(placePopup);
-// };
-
-
