@@ -17,7 +17,8 @@ import {
   profilePopupSelector,
   initialCards,
   validationConfig
-} from '../utils/constants.js'
+} from '../utils/constants.js';
+import './index.css'
 
 //валидация
 const profileFormValidator = new FormValidator(validationConfig, profileForm);
