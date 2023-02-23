@@ -15,10 +15,40 @@ import {
   imagePopupSelector,
   placePopupSelector,
   profilePopupSelector,
-  initialCards,
+  //initialCards,
   validationConfig
 } from '../utils/constants.js';
-import './index.css'
+import './index.css';
+import Api from '../components/Api.js';
+
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-60/cards',
+  headers: {
+    authorization: 'fb38f326-6de2-4957-880b-2bd78fd7f96a',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getInitialCards()
+  .then((res) => {
+    cardList.renderItems(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  const cardList = new Section(
+    {
+      // items: initialCards,
+      renderer: (item) => {
+        cardList.addItem(createNewCard(item));
+      },
+    },
+    cardsContainerSelector
+  );
+  //cardList.renderItems(initialCards);
+
 
 //валидация
 const profileFormValidator = new FormValidator(validationConfig, profileForm);
@@ -44,14 +74,14 @@ function createNewCard(item) {
   return cardElement
 };
 
-//класс добавления карточек на страницу
-const cardList = new Section ({
-  items: initialCards,
-  renderer: (item) => {
-    cardList.addItem(createNewCard(item));
-  }
-}, cardsContainerSelector);
-cardList.renderItems();
+// //класс добавления карточек на страницу
+// const cardList = new Section ({
+//   items: initialCards,
+//   renderer: (item) => {
+//     cardList.addItem(createNewCard(item));
+//   }
+// }, cardsContainerSelector);
+// cardList.renderItems();
 
 //попап с формой добавления карточки
 const popupTypePlace = new PopupWithForm(placePopupSelector, (inputData)=>{
@@ -78,3 +108,4 @@ editButton.addEventListener('click', () => {
   jobInput.value = job;
   popupTypeProfile.open();
 });
+

@@ -6,6 +6,7 @@ module.exports = {
     entry: {
         index: path.resolve(__dirname, 'src', 'pages', 'index.js'),
     },
+    devtool: 'inline-source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
