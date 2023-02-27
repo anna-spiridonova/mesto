@@ -10,7 +10,6 @@
   background-image: url(../../../images/ava_edit_icon.svg);
   background-size: 26px 26px;
   background-position: center;
-  z-index: 1;
 }
 
 .profile__avatar-button:not([disabled]):hover {

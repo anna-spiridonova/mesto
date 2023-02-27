@@ -1,30 +1,73 @@
 export default class Api {
   constructor(options) {
-    this.url = options.url;
+    this.baseUrl = options.baseUrl;
     this.headers = options.headers
   }
 
+  _handleResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+
   getInitialCards() {
-    return fetch(this.url, {
+    return fetch(`${this.baseUrl}/cards`, {
       headers: this.headers
     })
     .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._handleResponse(res)
     })
-
   }
 
-  // createCard(data) {
-  //   return fetch(this.url, {
-  //     headers: this.headers,
-  //     method: 'POST',
-  //     body: JSON.stringify(data)
-  //   })
-  //   .then(handleResponse)
-  // }
+  addNewCard(name, link) {
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.headers,
+      method: 'POST',
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+    })
+    .then(res => {
+      return this._handleResponse(res)
+    })
+  }
 
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this.headers
+    })
+    .then(res => {
+      return this._handleResponse(res)
+    })
+  }
+
+  editProfileInfo(name, about) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this.headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
+    })
+    .then(res => {
+      return this._handleResponse(res)
+    })
+  }
+
+  editAvatar(avatar) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      headers: this.headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+    .then(res => {
+      return this._handleResponse(res)
+    })
+  }
 }
