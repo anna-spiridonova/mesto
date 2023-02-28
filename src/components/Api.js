@@ -35,6 +35,16 @@ export default class Api {
     })
   }
 
+  // deleteCard(id) {
+  //   return fetch(`${this.baseUrl}/cards/${id}`, {
+  //     headers: this._headers,
+  //     method: 'DELETE'
+  //   })
+  //   .then(res => {
+  //     return this._handleResponse(res)
+  //   })
+  // }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers

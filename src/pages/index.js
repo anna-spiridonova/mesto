@@ -3,6 +3,7 @@ import FormValidator from "../components/FormValidator.js"
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import {
   profileForm,
@@ -18,12 +19,12 @@ import {
   placePopupSelector,
   profilePopupSelector,
   avatarPopupSelector,
-  //initialCards,
+  confirmPopupSelector,
   validationConfig
 } from '../utils/constants.js';
 import './index.css';
 import Api from '../components/Api.js';
-
+let myId
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-60',
@@ -36,40 +37,39 @@ const api = new Api({
 api.getInitialCards()
   .then((res) => {
     cardList.renderItems(res);
+    // console.log(res)
   })
   .catch((err) => {
     console.log(err);
   });
 
-
 //попап с формой добавления карточки
-const popupTypePlace = new PopupWithForm(placePopupSelector, cardSubmitButtonHandler
-  // (inputData)=>{
-  // cardList.addItem(createNewCard(inputData));
-);
+const popupTypePlace = new PopupWithForm(placePopupSelector, cardSubmitButtonHandler);
 popupTypePlace.setEventListeners();
 
-  const cardList = new Section(
-    {
-      renderer: (item) => {
-        cardList.addItem(createNewCard(item));
-      },
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      cardList.addItem(createNewCard(item));
     },
-    cardsContainerSelector
-  );
+  },
+  cardsContainerSelector
+);
 
-  // //класс добавления карточек на страницу
-// const cardList = new Section ({
-//   items: initialCards,
-//   renderer: (item) => {
-//     cardList.addItem(createNewCard(item));
-//   }
-// }, cardsContainerSelector);
-// cardList.renderItems();
+
+
+
+
+
 
 //создать карточку
 function createNewCard(item) {
-  const card = new Card(item, '#card-template', () => { imagePopup.open(item) });
+  const card = new Card(
+    item,
+    '#card-template',
+    () => { imagePopup.open(item) },
+    () => { confirmPopup.open() },
+    myId);
   const cardElement = card.generateCard();
   return cardElement
 };
@@ -82,18 +82,24 @@ function cardSubmitButtonHandler(inputData) {
   .catch((err) => {
     console.log(err);
   });
-
 }
 
-//валидация
-const profileFormValidator = new FormValidator(validationConfig, profileForm);
-profileFormValidator.enableValidation();
+const confirmPopup = new PopupWithConfirm(confirmPopupSelector
+  //, confirmSubmitButtonHandler
+  );
+confirmPopup.setEventListeners();
 
-const placeFormValidator = new FormValidator(validationConfig, placeForm);
-placeFormValidator.enableValidation();
 
-const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
-avatarFormValidator.enableValidation();
+
+
+
+
+
+
+
+
+
+
 
 //класс попапа картинки карточки
 const imagePopup = new PopupWithImage(imagePopupSelector);
@@ -106,10 +112,10 @@ const userInfo = new UserInfo ({
   avatarSelector: '.profile__avatar'
 });
 
-
 api.getUserInfo()
 .then((res) => {
   userInfo.setUserInfo(res);
+  myId = res._id
 })
 .catch((err) => {
   console.log(err);
@@ -130,8 +136,7 @@ function profileSubmitButtonHandler(inputData) {
 }
 
 //попап редактора аватара
-const popupTypeAvatar = new PopupWithForm(avatarPopupSelector, avatarSubmitButtonHandler
-  );
+const popupTypeAvatar = new PopupWithForm(avatarPopupSelector, avatarSubmitButtonHandler);
 popupTypeAvatar.setEventListeners();
 
 function avatarSubmitButtonHandler(inputData) {
@@ -144,7 +149,15 @@ function avatarSubmitButtonHandler(inputData) {
   });
 }
 
+//валидация
+const profileFormValidator = new FormValidator(validationConfig, profileForm);
+profileFormValidator.enableValidation();
 
+const placeFormValidator = new FormValidator(validationConfig, placeForm);
+placeFormValidator.enableValidation();
+
+const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
+avatarFormValidator.enableValidation();
 
 //слушатель кнопки добавления карточки
 addButton.addEventListener('click', () => {
