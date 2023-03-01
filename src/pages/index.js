@@ -58,10 +58,6 @@ const cardList = new Section(
 
 
 
-
-
-
-
 //создать карточку
 function createNewCard(item) {
   const card = new Card(
@@ -69,10 +65,36 @@ function createNewCard(item) {
     '#card-template',
     () => { imagePopup.open(item) },
     () => { confirmPopup.open(card) },
-    myId);
+    myId,
+    handlePutLike,
+    handleDeleteLike);
   const cardElement = card.generateCard();
   return cardElement
 };
+
+
+
+
+
+function handlePutLike(card) {
+  api.putLike(card._id)
+    .then((res) => {
+      card.updateLikeCounter(res)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function handleDeleteLike(card) {
+  api.deleteLike(card._id)
+  .then((res) => {
+    card.updateLikeCounter(res)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 function cardSubmitButtonHandler(inputData) {
   api.addNewCard(inputData.name, inputData.link)
@@ -83,14 +105,6 @@ function cardSubmitButtonHandler(inputData) {
     console.log(err);
   });
 }
-
-
-
-
-
-
-
-
 
 const confirmPopup = new PopupWithConfirm(confirmPopupSelector, confirmSubmitButtonHandler);
 confirmPopup.setEventListeners();
