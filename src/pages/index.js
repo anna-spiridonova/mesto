@@ -24,7 +24,7 @@ import {
 } from '../utils/constants.js';
 import './index.css';
 import Api from '../components/Api.js';
-let myId
+let myId;
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-60',
@@ -37,7 +37,6 @@ const api = new Api({
 api.getInitialCards()
   .then((res) => {
     cardList.renderItems(res);
-    //console.log(res)
   })
   .catch((err) => {
     console.log(err);
@@ -47,6 +46,17 @@ api.getInitialCards()
 const popupTypePlace = new PopupWithForm(placePopupSelector, cardSubmitButtonHandler);
 popupTypePlace.setEventListeners();
 
+function cardSubmitButtonHandler(inputData) {
+  api.addNewCard(inputData.name, inputData.link)
+  .then((res) => {
+    cardList.renderItem(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
+//добавление карточек на страницу
 const cardList = new Section(
   {
     renderer: (item) => {
@@ -55,8 +65,6 @@ const cardList = new Section(
   },
   cardsContainerSelector
 );
-
-
 
 //создать карточку
 function createNewCard(item) {
@@ -72,10 +80,7 @@ function createNewCard(item) {
   return cardElement
 };
 
-
-
-
-
+//обработчик постановки лайка
 function handlePutLike(card) {
   api.putLike(card._id)
     .then((res) => {
@@ -84,8 +89,9 @@ function handlePutLike(card) {
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
+//обработчик удаления лайка
 function handleDeleteLike(card) {
   api.deleteLike(card._id)
   .then((res) => {
@@ -94,18 +100,13 @@ function handleDeleteLike(card) {
   .catch((err) => {
     console.log(err);
   });
-}
+};
 
-function cardSubmitButtonHandler(inputData) {
-  api.addNewCard(inputData.name, inputData.link)
-  .then((res) => {
-    cardList.renderItem(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
+//попап картинки карточки
+const imagePopup = new PopupWithImage(imagePopupSelector);
+imagePopup.setEventListeners();
 
+//попап подтверждения удаления карточки
 const confirmPopup = new PopupWithConfirm(confirmPopupSelector, confirmSubmitButtonHandler);
 confirmPopup.setEventListeners();
 
@@ -117,11 +118,7 @@ function confirmSubmitButtonHandler(card) {
   .catch((err) => {
     console.log(err);
   });
-}
-
-//класс попапа картинки карточки
-const imagePopup = new PopupWithImage(imagePopupSelector);
-imagePopup.setEventListeners();
+};
 
 //класс с данными профиля
 const userInfo = new UserInfo ({
@@ -151,7 +148,7 @@ function profileSubmitButtonHandler(inputData) {
   .catch((err) => {
     console.log(err);
   });
-}
+};
 
 //попап редактора аватара
 const popupTypeAvatar = new PopupWithForm(avatarPopupSelector, avatarSubmitButtonHandler);
@@ -165,7 +162,7 @@ function avatarSubmitButtonHandler(inputData) {
   .catch((err) => {
     console.log(err);
   });
-}
+};
 
 //валидация
 const profileFormValidator = new FormValidator(validationConfig, profileForm);

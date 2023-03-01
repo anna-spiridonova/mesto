@@ -1,7 +1,7 @@
 export default class Api {
   constructor(options) {
-    this.baseUrl = options.baseUrl; //
-    this.headers = options.headers
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers
   }
 
   _handleResponse(res) {
@@ -13,8 +13,8 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this.baseUrl}/cards`, {
-      headers: this.headers
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
     })
     .then(res => {
       return this._handleResponse(res)
@@ -22,8 +22,8 @@ export default class Api {
   }
 
   addNewCard(name, link) {
-    return fetch(`${this.baseUrl}/cards`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
       method: 'POST',
       body: JSON.stringify({
         name: name,
@@ -36,8 +36,8 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      headers: this._headers,
       method: 'DELETE'
     })
     .then(res => {
@@ -46,8 +46,8 @@ export default class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
     })
     .then(res => {
       return this._handleResponse(res)
@@ -55,8 +55,8 @@ export default class Api {
   }
 
   editProfileInfo(name, about) {
-    return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
         name: name,
@@ -69,8 +69,8 @@ export default class Api {
   }
 
   editAvatar(avatar) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
         avatar: avatar
@@ -82,8 +82,8 @@ export default class Api {
   }
 
   putLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      headers: this._headers,
       method: 'PUT',
     })
     .then(res => {
@@ -92,8 +92,8 @@ export default class Api {
   }
 
   deleteLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
-      headers: this.headers,
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      headers: this._headers,
       method: 'DELETE',
     })
     .then(res => {
