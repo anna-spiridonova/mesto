@@ -1,6 +1,6 @@
 export default class Api {
   constructor(options) {
-    this.baseUrl = options.baseUrl;
+    this.baseUrl = options.baseUrl; //
     this.headers = options.headers
   }
 
@@ -35,15 +35,15 @@ export default class Api {
     })
   }
 
-  // deleteCard(id) {
-  //   return fetch(`${this.baseUrl}/cards/${id}`, {
-  //     headers: this._headers,
-  //     method: 'DELETE'
-  //   })
-  //   .then(res => {
-  //     return this._handleResponse(res)
-  //   })
-  // }
+  deleteCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+      headers: this.headers,
+      method: 'DELETE'
+    })
+    .then(res => {
+      return this._handleResponse(res)
+    })
+  }
 
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {

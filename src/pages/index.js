@@ -37,7 +37,7 @@ const api = new Api({
 api.getInitialCards()
   .then((res) => {
     cardList.renderItems(res);
-    // console.log(res)
+    //console.log(res)
   })
   .catch((err) => {
     console.log(err);
@@ -68,7 +68,7 @@ function createNewCard(item) {
     item,
     '#card-template',
     () => { imagePopup.open(item) },
-    () => { confirmPopup.open() },
+    () => { confirmPopup.open(card) },
     myId);
   const cardElement = card.generateCard();
   return cardElement
@@ -84,22 +84,26 @@ function cardSubmitButtonHandler(inputData) {
   });
 }
 
-const confirmPopup = new PopupWithConfirm(confirmPopupSelector
-  //, confirmSubmitButtonHandler
-  );
+
+
+
+
+
+
+
+
+const confirmPopup = new PopupWithConfirm(confirmPopupSelector, confirmSubmitButtonHandler);
 confirmPopup.setEventListeners();
 
-
-
-
-
-
-
-
-
-
-
-
+function confirmSubmitButtonHandler(card) {
+  api.deleteCard(card._id)
+  .then(() => {
+    card.deleteCard()
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 //класс попапа картинки карточки
 const imagePopup = new PopupWithImage(imagePopupSelector);
