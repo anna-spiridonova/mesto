@@ -34,12 +34,14 @@ const api = new Api({
   }
 });
 
-api.getInitialCards()
-  .then((res) => {
-    cardList.renderItems(res);
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([resUserInfo, resInitialCards]) => {
+    userInfo.setUserInfo(resUserInfo);
+    myId = resUserInfo._id;
+    cardList.renderItems(resInitialCards)
   })
   .catch((err) => {
-    console.log(err);
+    console.log(err)
   });
 
 //попап с формой добавления карточки
@@ -47,9 +49,12 @@ const popupTypePlace = new PopupWithForm(placePopupSelector, cardSubmitButtonHan
 popupTypePlace.setEventListeners();
 
 function cardSubmitButtonHandler(inputData) {
+  popupTypePlace.renderLoading();
+
   api.addNewCard(inputData.name, inputData.link)
   .then((res) => {
-    cardList.renderItem(res);
+    cardList.addItem(createNewCard(res));
+    popupTypePlace.close();
   })
   .catch((err) => {
     console.log(err);
@@ -113,7 +118,8 @@ confirmPopup.setEventListeners();
 function confirmSubmitButtonHandler(card) {
   api.deleteCard(card._id)
   .then(() => {
-    card.deleteCard()
+    card.deleteCard();
+    confirmPopup.close()
   })
   .catch((err) => {
     console.log(err);
@@ -127,23 +133,17 @@ const userInfo = new UserInfo ({
   avatarSelector: '.profile__avatar'
 });
 
-api.getUserInfo()
-.then((res) => {
-  userInfo.setUserInfo(res);
-  myId = res._id
-})
-.catch((err) => {
-  console.log(err);
-});
-
 //попап с формой редактора профиля
 const popupTypeProfile = new PopupWithForm(profilePopupSelector, profileSubmitButtonHandler);
 popupTypeProfile.setEventListeners();
 
 function profileSubmitButtonHandler(inputData) {
+  popupTypeProfile.renderLoading();
+
   api.editProfileInfo(inputData.name, inputData.job)
   .then((res) => {
-    userInfo.setUserInfo(res)
+    userInfo.setUserInfo(res);
+    popupTypeProfile.close();
   })
   .catch((err) => {
     console.log(err);
@@ -155,9 +155,12 @@ const popupTypeAvatar = new PopupWithForm(avatarPopupSelector, avatarSubmitButto
 popupTypeAvatar.setEventListeners();
 
 function avatarSubmitButtonHandler(inputData) {
+  popupTypeAvatar.renderLoading();
+
   api.editAvatar(inputData.avatar)
   .then((res) => {
-    userInfo.setUserInfo(res)
+    userInfo.setUserInfo(res);
+    popupTypeAvatar.close();
   })
   .catch((err) => {
     console.log(err);
@@ -190,6 +193,6 @@ editButton.addEventListener('click', () => {
 
 //слушатель кнопки редактора аватара
 avatarButton.addEventListener('click', () => {
-  placeFormValidator.disableCardSubmit();
+  avatarFormValidator.disableCardSubmit();
   popupTypeAvatar.open();
 });
